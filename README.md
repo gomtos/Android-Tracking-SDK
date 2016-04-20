@@ -1,4 +1,4 @@
-CAULY Tracking Android SDK 
+CAULY Tracking Android SDK
 =======================
  
  본 문서는  애드 네트워크 파트너 혹은 광고주가 SDK API를 통해 타게팅을 위한 정보를 제공 연동 규격을 정의합니다.
@@ -12,27 +12,27 @@ CAULY Tracking Android SDK
 
 ### Table of contents
  - CAULY Tracking Android SDK
-	- 연동 절차
-	- SDK 적용
-		- Project Setting
+	- [연동 절차](#연동-절차)
+	- [SDK 적용](#sdk-적용)
+		- [Project Setting](#project-setting)
 			- proguard
 			- Initialize
-		- SDK 구조
+		- [SDK 구조](#sdk-구조)
 			- CaulyTrackerBuilder
 			- CaulyTracker
-		- CaulyTrackerBuilder를 통한 초기화
+		- [CaulyTrackerBuilder를 통한 초기화](#caulytrackerbuilder를-통한-초기화)
 			- Sample
-		- Webview를 사용하는 Hybrid App 적용 가이드
+		- [Webview를 사용하는 Hybrid App 적용 가이드](#webview를-사용하는-hybrid-app-적용-가이드)
 			- samlple
-		- Install Referrer Check
-		- Session
+		- [Install Referrer Check](#install-referrer-check)
+		- [Session](#session)
 			- sample
-		- Event
+		- [Event](#event)
 			- Custom Event
 				- name only sample
 				- name / single param sample
 				- name / defined param sample
-	- Cauly JS Inteface For WebView
+	- [Cauly JS Inteface For WebView](#cauly-js-inteface-for-webview)
 		- Inject javascript interface
 			- sample
 		- Get Platform String
@@ -73,7 +73,7 @@ AndroidManifest.xml 내에 meta data 태그로 발급받은 track code를 입력
 ```
 
 ### SDK 구조
-#### CaulyTrackerBuilder 
+#### CaulyTrackerBuilder
 기본적인 설정 정보와 함께 CaulyTracker instance를 초기화합니다.
 ![CaulyTracker class](misc/CaulyTrackerBuilder.png)
 
@@ -293,7 +293,7 @@ caulyTracker.trackEvent("event3_caulyevent", caulyTrackerEvent);
 
 Cauly JS Inteface For WebView
 -----------------------------
-### Inject javascript interface 
+### Inject javascript interface
 #### sample
 
 ```java
