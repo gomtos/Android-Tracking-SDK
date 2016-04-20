@@ -87,7 +87,7 @@ Event를 Tracking 할 수 있는 method들을 제공합니다.
 | Method | mandatory | Description |
 | --------- | ------------- | ------------- |
 | setUserId | optional | 각 서비스를 사용하는 사용자의 고유 ID |
-| setAge | optional | 사용자의 연령연령<br>정보를 추가하면 더욱 세밀한 분석이 가능합니다.|
+| setAge | optional | 사용자의 연령<br>연령 정보를 추가하면 더욱 세밀한 분석이 가능합니다.|
 | setGender | optional | 사용자의 성별<br>성별 정보를 추가하면 더욱 세밀한 분석이 가능합니다. |
 | setLogLevel | optional | 로그 출력 level<br>default : Info
 | build | mandatory | tracker instance를 생성 |
