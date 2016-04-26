@@ -63,5 +63,5 @@ caulyTracker.trackEvent("PRODUCT", productId);
 ##### Conversion 이벤트
 ```java
 CaulyTracker caulyTracker = CaulyTrackerBuilder.getTrackerInstance();
-caulyTracker.trackEvent("CA_APPLY", productId);
+caulyTracker.trackEvent("CA_APPLY");
 ```
