@@ -225,7 +225,7 @@ protected void onCreate(Bundle savedInstanceState) {
 
 	CaulyTrackerBuilder caulyTrackerBuilder = new CaulyTrackerBuilder(getApplicationContext());
 
-	caulyTracker = caulyTrackerBuilder.setUserId("customer_id_0922451")
+	CaulyTracker caulyTracker = caulyTrackerBuilder.setUserId("customer_id_0922451")
 			.setAge("25")
 			.setGender(TrackerConst.FEMALE)
 			.setLogLevel(LogLevel.Debug)
