@@ -15,10 +15,6 @@ Cauly 리타겟팅 Android 연동 가이드
 ### 목차
 - [연동 절차](#연동-절차)
 - [연동 상세](#연동-상세)
-	- [메인 페이지](#메인-페이지)
-		- 스크립트 삽입
-	- [구매 완료 페이지](#구매-완료-페이지)
-		- 스크립트 삽입
 
 
 ### 연동 절차
@@ -30,8 +26,6 @@ Cauly 리타겟팅 Android 연동 가이드
 
 
 ### 연동 상세
-Cauly 에서 발급한 track_code 를 aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee 라고 가정하겠습니다.
-예제 코드에서 aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee 부분은 따로 발급 받은 track_code 로 대체하여야 합니다.
 
 - Setting
  - proguard: https://github.com/CaulyTracker/Android-Tracking-SDK#proguard
