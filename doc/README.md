@@ -48,7 +48,7 @@ caulyTracker.traceDeepLink(deepLinkStr);
 CaulyTracker caulyTracker = CaulyTrackerBuilder.getTrackerInstance();
 caulyTracker.trackEvent("OPEN");
 ```
-##### 상품 이벤트
+##### 상품 view 이벤트
 ```java
 String productId = "987654321"; // 광고주의 product id 를 987654321 라 가정하면
 CaulyTracker caulyTracker = CaulyTrackerBuilder.getTrackerInstance();
