@@ -46,8 +46,8 @@ public class WebviewActivity extends AppCompatActivity {
 		testWebview.setWebViewClient(new WebViewClient());
 		testWebview.clearCache(true);
 
-		testWebview.loadUrl(
-				"http://image.cauly.co.kr/richad/test/changju/tracker/initadid/CaulyTrackingSample.html?t=" + System.currentTimeMillis());
+		testWebview.loadUrl("http://image.cauly.co.kr/richad/test/changju/tracker/initadid/CaulyTrackingSample.html?t="
+				+ System.currentTimeMillis());
 
 		testWebview.addJavascriptInterface(new CaulyJsInterface(testWebview), CaulyJsInterface.CAULY_JS_INTERFACE_NAME);
 

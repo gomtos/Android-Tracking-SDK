@@ -30,15 +30,30 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="OtherInstallReferrer" >
+        <receiver
+            android:name="OtherInstallReferrer"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
-        
+
         <activity
             android:name=".EventActivity"
             android:label="@string/title_activity_event" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="caulytrackertest.com"
+                    android:pathPrefix="/purchase"
+                    android:scheme="caulytrackertest" />
+
+                <action android:name="android.app.action.ADD_DEVICE_ADMIN" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".WebviewActivity"
@@ -47,7 +62,7 @@
 
         <meta-data
             android:name="cauly_track_code"
-            android:value="TEST_CODE" />
+            android:value="NEIL_TEST_CODE" />
     </application>
 
 </manifest>

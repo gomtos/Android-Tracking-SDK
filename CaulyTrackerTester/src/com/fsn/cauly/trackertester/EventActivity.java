@@ -6,9 +6,11 @@ import com.fsn.cauly.tracker.CaulyTrackerBuilder;
 import com.fsn.cauly.tracker.CaulyTrackerPurchaseEvent;
 import com.fsn.cauly.tracker.Logger;
 import com.fsn.cauly.tracker.Logger.LogLevel;
+import com.fsn.cauly.tracker.Product;
 import com.fsn.cauly.tracker.TrackerConst;
 import com.fsn.cauly.tracker.exception.CaulyException;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -36,6 +38,18 @@ public class EventActivity extends AppCompatActivity implements ActionBar.TabLis
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event);
+
+		Uri data = this.getIntent().getData();
+		if (data != null && data.isHierarchical()) {
+			String uri = this.getIntent().getDataString();
+
+			try {
+				CaulyTrackerBuilder.getTrackerInstance().traceDeepLink(uri);
+			} catch (CaulyException e) {
+				e.printStackTrace();
+			}
+
+		}
 
 		// Set up the action bar.
 		final ActionBar actionBar = getSupportActionBar();
@@ -129,10 +143,9 @@ public class EventActivity extends AppCompatActivity implements ActionBar.TabLis
 
 		private Button btnPurchaseEvent;
 
-		private EditText editTextProductName;
-		private EditText editTextUnitPrice;
-		private EditText editTextQuantity;
-		private EditText editTextRevenue;
+		private EditText editTextProductId;
+		private EditText editTextProductPrice;
+		private EditText editTextProductQuantity;
 
 		/**
 		 * Returns a new instance of this fragment for the given section number.
@@ -154,15 +167,13 @@ public class EventActivity extends AppCompatActivity implements ActionBar.TabLis
 			btnPurchaseEvent = (Button) rootView.findViewById(R.id.btnPurchaseEvent);
 			btnPurchaseEvent.setOnClickListener(this);
 
-			editTextProductName = (EditText) rootView.findViewById(R.id.editTextProductName);
-			editTextUnitPrice = (EditText) rootView.findViewById(R.id.editTextUnitPrice);
-			editTextQuantity = (EditText) rootView.findViewById(R.id.editTextQuantity);
-			editTextRevenue = (EditText) rootView.findViewById(R.id.editTextRevenue);
+			editTextProductId = (EditText) rootView.findViewById(R.id.editTextProductName);
+			editTextProductPrice = (EditText) rootView.findViewById(R.id.editTextUnitPrice);
+			editTextProductQuantity = (EditText) rootView.findViewById(R.id.editTextQuantity);
 
-			editTextProductName.setText("TestItem");
-			editTextUnitPrice.setText("1.28");
-			editTextQuantity.setText("2");
-			editTextRevenue.setText("2.48");
+			editTextProductId.setText("TestItem");
+			editTextProductPrice.setText("1.28");
+			editTextProductQuantity.setText("2");
 
 			return rootView;
 		}
@@ -171,12 +182,17 @@ public class EventActivity extends AppCompatActivity implements ActionBar.TabLis
 		public void onClick(View v) {
 			if (v.getId() == R.id.btnPurchaseEvent) {
 
+				String productId = editTextProductId.getText().toString();
+				String productPrice = editTextProductPrice.getText().toString();
+				String productQuantity = editTextProductQuantity.getText().toString();
+
 				CaulyTrackerPurchaseEvent purchaseEvent = new CaulyTrackerPurchaseEvent();
-				purchaseEvent.setProductName(editTextProductName.getText().toString());
+
+				Product product = new Product(productId, productPrice, productQuantity);
 				try {
-					purchaseEvent.setUnitPrice(editTextUnitPrice.getText().toString());
-					purchaseEvent.setQuantity(editTextQuantity.getText().toString());
-					purchaseEvent.setRevenue(editTextRevenue.getText().toString());
+					purchaseEvent.setOrderId("test_order_0001");
+					purchaseEvent.setOrderPrice("100,000");
+					purchaseEvent.addProuduct(product);
 					purchaseEvent.setCurrencyCode(TrackerConst.CURRENCY_KRW);
 
 					CaulyTrackerBuilder.getTrackerInstance().trackEvent(purchaseEvent);

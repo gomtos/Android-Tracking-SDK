@@ -63,10 +63,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
 		// Initailize tracker instance.
 		// LogLevel should not be set on Product Build.
-		caulyTracker = caulyTrackerBuilder.setUserId("customer_id_tester") // Optional : user id
+		caulyTracker = caulyTrackerBuilder.setUserId("customer_id_tester") // Optional
+																			// :
+																			// user
+																			// id
 				.setAge("0") // Optional : age
 				.setGender(TrackerConst.FEMALE) // Optional : Gender
-				.setLogLevel(LogLevel.Debug).build();
+				.setLogLevel(LogLevel.Error).build();
 
 		// Tracking Start
 		caulyTracker.startSession();
