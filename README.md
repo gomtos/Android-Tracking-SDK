@@ -66,7 +66,7 @@ AndroidManifest.xml 내에 meta data 태그로 발급받은 track code를 입력
 ...
  <meta-data
 	android:name="cauly_track_code"
-	android:value="TEST_CODE" />
+	android:value="[CAULY_TRACK_CODE]" />
 
 ...
 </application>
