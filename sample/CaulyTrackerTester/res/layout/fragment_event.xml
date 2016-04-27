@@ -1,0 +1,94 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.fsn.cauly.trackertester.EventActivity$PlaceholderFragment" >
+
+    <TextView
+        android:id="@+id/textProductName"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="ProductName" />
+
+    <EditText
+        android:id="@+id/editTextProductName"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:hint="ProductName" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textUnitPrice"
+        android:layout_width="wrap_content"
+       android:layout_height="50dp"
+        android:layout_below="@+id/textProductName"
+        android:text="UnitPrice" />
+
+    <EditText
+        android:id="@+id/editTextUnitPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/editTextProductName"
+        android:ems="10"
+        android:hint="UnitPrice" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textQuantity"
+        android:layout_width="wrap_content"
+       android:layout_height="50dp"
+        android:layout_below="@+id/textUnitPrice"
+        android:text="Quantity" />
+
+    <EditText
+        android:id="@+id/editTextQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/editTextUnitPrice"
+        android:ems="10"
+        android:hint="Quantity" >
+
+        <requestFocus />
+    </EditText>
+    
+     <TextView
+        android:id="@+id/textRevenue"
+        android:layout_width="wrap_content"
+       android:layout_height="50dp"
+        android:layout_below="@+id/textQuantity"
+        android:text="Revenue" />
+
+    <EditText
+        android:id="@+id/editTextRevenue"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/editTextQuantity"
+        android:ems="10"
+        android:hint="Revenue" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/btnPurchaseEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="49dp"
+        android:text="Send PurchaseEvent" />
+
+</RelativeLayout>
