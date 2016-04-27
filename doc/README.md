@@ -19,8 +19,8 @@ Cauly 리타겟팅 Android 연동 가이드
 
 ### 연동 절차
 1. Cauly 담당자 혹은 cauly@fsn.co.kr로 연락하여 Cauly 리타겟팅 연동에 대해서 협의합니다.
-1. 협의 완료 후, site_code 를 발급받습니다.
-1. site_code 를 포함한 tracker 코드를 Android 앱의 필요한 곳에 삽입합니다.
+1. 협의 완료 후, track_code 를 발급받습니다.
+1. track_code 를 포함한 tracker 코드를 Android 앱의 필요한 곳에 삽입합니다.
 1. 코드 삽입 이후 연동이 되었는지 Cauly 에서 테스트를 진행합니다.
 1. 테스트가 완료되면 광고를 집행합니다.
 
