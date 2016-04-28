@@ -317,8 +317,16 @@ caulyTracker.trackEvent("event3_caulyevent", caulyTrackerEvent);
 
 ```java
 CaulyTrackerPurchaseEvent purchaseEvent = new CaulyTrackerPurchaseEvent();
-Product product = new Product("p_0344411", "20000", "3");
-Product product2 = new Product("p_0344412", "10000", "1");
+
+String productId = "p_0344411";
+String productPrice = "20000";
+String productQuantity = "3";
+Product product = new Product(productId, productPrice, productQuantity);
+
+String productId2 = "p_0344412";
+String productPrice2 = "10000";
+String productQuantity2 = "1";
+Product product = new Product(productId2, productPrice2, productQuantity2);
 
 purchaseEvent.setOrderId("order_20160430");
 purchaseEvent.setOrderPrice("70000");
