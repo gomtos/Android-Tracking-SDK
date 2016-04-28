@@ -59,3 +59,29 @@ caulyTracker.trackEvent("PRODUCT", productId);
 CaulyTracker caulyTracker = CaulyTrackerBuilder.getTrackerInstance();
 caulyTracker.trackEvent("CA_APPLY");
 ```
+##### Purchase 이벤트
+```java
+// 유저가 구매한 20000원짜리 (product id "987654321") 3개와 10000원짜리 (product id "887654321") 1개를 샀고,
+// 그래서 총 구매액은 70000원이고,
+// 광고주가 발급한 구매 id(order id) 가 "order_20160430" 라고 가정하면,
+CaulyTrackerPurchaseEvent purchaseEvent = new CaulyTrackerPurchaseEvent();
+
+String productId = "987654321";
+String productPrice = "20000";
+String productQuantity = "3";
+Product product = new Product(productId, productPrice, productQuantity);
+
+String productId2 = "887654321";
+String productPrice2 = "10000";
+String productQuantity2 = "1";
+Product product = new Product(productId2, productPrice2, productQuantity2);
+
+purchaseEvent.setOrderId("order_20160430");
+purchaseEvent.setOrderPrice("70000");
+purchaseEvent.addProuduct(product);
+purchaseEvent.addProuduct(product2);
+purchaseEvent.setCurrencyCode(TrackerConst.CURRENCY_KRW);
+
+CaulyTrackerBuilder.getTrackerInstance().trackEvent(purchaseEvent);
+```
+상세 설명: https://github.com/CaulyTracker/Android-Tracking-SDK/blob/master/README.md#purchase
