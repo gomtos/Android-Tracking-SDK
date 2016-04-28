@@ -8,7 +8,8 @@ CAULY Tracking Android SDK
 | 문서 버전 | 작성 날짜 | 작성자 및 내용 | 
 | ---------- | ----------- | ---------------- |
 | 1.0.0 | 2015.10.09 | 권대화(neilkwon at fsn.co.kr) - 초안작성 |
-| 1.0.1 | 2016.04.06| 권대화(neilkwon at fsn.co.kr) - 업데이트 내역 |
+| 1.0.1 | 2016.04.06 | 권대화(neilkwon at fsn.co.kr) - 업데이트 내역 |
+| 1.0.2 | 2016.04.28 | 권대화(neilkwon at fsn.co.kr) - 업데이트 내역 |
 
 ### Table of contents
  - CAULY Tracking Android SDK
@@ -28,10 +29,12 @@ CAULY Tracking Android SDK
 		- [Session](#session)
 			- sample
 		- [Event](#event)
-			- Custom Event
+			- [Custom Event](#custom-event)
 				- name only sample
 				- name / single param sample
 				- name / defined param sample
+			- [Defined Event](#defined-event)
+				- Purchase
 	- [Cauly JS Inteface For WebView](#cauly-js-inteface-for-webview)
 		- Inject javascript interface
 			- sample
@@ -60,7 +63,7 @@ Proguard 적용시에는 SDK에 적용되지 않도록 아래 설정을 추가
 
 #### Initialize
 AndroidManifest.xml 내에 meta data 태그로 발급받은 track code를 입력합니다. 
-
+예시의 '[CAULY_TRACK_CODE]'부분을 변경합니다. ( [] 기호는 불필요 )
 ```xml
 <application
 ...
@@ -75,11 +78,13 @@ AndroidManifest.xml 내에 meta data 태그로 발급받은 track code를 입력
 ### SDK 구조
 #### CaulyTrackerBuilder
 기본적인 설정 정보와 함께 CaulyTracker instance를 초기화합니다.
+<br>
 ![CaulyTracker class](misc/CaulyTrackerBuilder.png)
 
 
 #### CaulyTracker
 Event를 Tracking 할 수 있는 method들을 제공합니다.
+<br>
 ![CaulyTracker class](misc/CaulyTracker.png)
 
 
@@ -101,6 +106,12 @@ caulyTracker = caulyTrackerBuilder.setUserId("customer_id_0922451")
 				.setGender(TrackerConst.FEMALE)
 				.setLogLevel(LogLevel.Debug)
 				.build();
+```
+
+userId, Age, Gender등의 정보는 Builder 로 초기화한 이후 CaulyTracker instance를 통해서도 변경가능합니다.
+```java
+CaulyTrackerBuilder.getTrackerInstance().setAge("20");
+CaulyTrackerBuilder.getTrackerInstance().setGender(TrackerConst.MALE);
 ```
 
 ----------
@@ -290,6 +301,33 @@ caulyTrackerEvent.setParam4("test4");
 caulyTracker.trackEvent("event3_caulyevent", caulyTrackerEvent);
 ```
 
+#### Defined Event
+자주 사용되거나 또는 중요하다 판단되는 Event에 대한 선정의된 Event입니다.
+
+##### Purchase
+구매 또는 지불이 발생하였을때 호출
+
+| Parameter | Type |Required | Default | Description |
+| --------- | ---- | ------- | ------- | ----------- |
+| order_id | String | mandatory | - | Order ID |
+| order_price | String | mandatory | - | 발생한 전체 금액 |
+| purchase_type | String | optional | - | 구매의 성격<br>eg)재구매 : RE-PURCHASE |
+| product_infos | List<Product> | mandatory | - | 구매된 상품의 상세 정보 목록<br>최소 1개 이상 상품이 등록되어야 합니다. |
+| currency_code | String | optional | KRW | 통화 코드 |
+
+```java
+CaulyTrackerPurchaseEvent purchaseEvent = new CaulyTrackerPurchaseEvent();
+Product product = new Product("p_0344411", "20000", "3");
+Product product2 = new Product("p_0344412", "10000", "1");
+
+purchaseEvent.setOrderId("order_20160430");
+purchaseEvent.setOrderPrice("70000");
+purchaseEvent.addProuduct(product);
+purchaseEvent.addProuduct(product2);
+purchaseEvent.setCurrencyCode(TrackerConst.CURRENCY_KRW);
+
+CaulyTrackerBuilder.getTrackerInstance().trackEvent(purchaseEvent);
+```
 
 Cauly JS Inteface For WebView
 -----------------------------
