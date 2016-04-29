@@ -85,3 +85,30 @@ purchaseEvent.setCurrencyCode(TrackerConst.CURRENCY_KRW);
 CaulyTrackerBuilder.getTrackerInstance().trackEvent(purchaseEvent);
 ```
 상세 설명: https://github.com/CaulyTracker/Android-Tracking-SDK/blob/master/README.md#purchase
+
+##### Re-Purchase 이벤트
+재구매 유저를 골라서 분류해보고 싶으면 아래처럼 한 줄 추가된 코드를 사용합니다.
+```java
+CaulyTrackerPurchaseEvent purchaseEvent = new CaulyTrackerPurchaseEvent();
+
+String productId = "p_0344411";
+String productPrice = "20000";
+String productQuantity = "3";
+Product product = new Product(productId, productPrice, productQuantity);
+
+String productId2 = "p_0344412";
+String productPrice2 = "10000";
+String productQuantity2 = "1";
+Product product = new Product(productId2, productPrice2, productQuantity2);
+
+// 아래 한 줄을 추가합니다
+purchaseEvent.setPurchaseType("RE-PURCHASE");
+// 한 줄 추가 끝
+purchaseEvent.setOrderId("order_20160430");
+purchaseEvent.setOrderPrice("70000");
+purchaseEvent.addProuduct(product);
+purchaseEvent.addProuduct(product2);
+purchaseEvent.setCurrencyCode(TrackerConst.CURRENCY_KRW);
+
+CaulyTrackerBuilder.getTrackerInstance().trackEvent(purchaseEvent);
+```
