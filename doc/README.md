@@ -87,7 +87,7 @@ CaulyTrackerBuilder.getTrackerInstance().trackEvent(purchaseEvent);
 상세 설명: https://github.com/CaulyTracker/Android-Tracking-SDK/blob/master/README.md#purchase
 
 ##### Re-Purchase 이벤트
-재구매 유저를 골라서 분류해보고 싶으면 아래처럼 한 줄 추가된 코드를 사용합니다.
+재구매(첫 구매가 아닌) 유저를 골라서 분류해보고 싶으면 아래처럼 한 줄 추가된 코드를 사용합니다.
 ```java
 CaulyTrackerPurchaseEvent purchaseEvent = new CaulyTrackerPurchaseEvent();
 
