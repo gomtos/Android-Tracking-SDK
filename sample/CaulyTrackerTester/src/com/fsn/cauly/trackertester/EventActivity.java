@@ -143,9 +143,17 @@ public class EventActivity extends AppCompatActivity implements ActionBar.TabLis
 
 		private Button btnPurchaseEvent;
 
-		private EditText editTextProductId;
-		private EditText editTextProductPrice;
-		private EditText editTextProductQuantity;
+		private EditText editTextOrderId;
+		private EditText editTextOrderPrice;
+		
+		private EditText editTextProduct1Id;
+		private EditText editTextProduct1Price;
+		private EditText editTextProduct1Quantity;
+		
+		private EditText editTextProduct2Id;
+		private EditText editTextProduct2Price;
+		private EditText editTextProduct2Quantity;
+		
 
 		/**
 		 * Returns a new instance of this fragment for the given section number.
@@ -167,14 +175,29 @@ public class EventActivity extends AppCompatActivity implements ActionBar.TabLis
 			btnPurchaseEvent = (Button) rootView.findViewById(R.id.btnPurchaseEvent);
 			btnPurchaseEvent.setOnClickListener(this);
 
-			editTextProductId = (EditText) rootView.findViewById(R.id.editTextProductName);
-			editTextProductPrice = (EditText) rootView.findViewById(R.id.editTextUnitPrice);
-			editTextProductQuantity = (EditText) rootView.findViewById(R.id.editTextQuantity);
+			editTextOrderId = (EditText) rootView.findViewById(R.id.editTextOrderId);
+			editTextOrderPrice = (EditText) rootView.findViewById(R.id.editTextOrderPrice);
+			
+			editTextOrderId.setText("order_20160427_11");
+			editTextOrderPrice.setText("");
 
-			editTextProductId.setText("TestItem");
-			editTextProductPrice.setText("1.28");
-			editTextProductQuantity.setText("2");
-
+			editTextProduct1Id = (EditText) rootView.findViewById(R.id.editTextProductId1);
+			editTextProduct2Id = (EditText) rootView.findViewById(R.id.editTextProductId2);
+			
+			editTextProduct1Price = (EditText) rootView.findViewById(R.id.editTextProductPrice1);
+			editTextProduct2Price = (EditText) rootView.findViewById(R.id.editTextProductPrice2);
+			
+			editTextProduct1Quantity = (EditText) rootView.findViewById(R.id.editTextProductQuantity1);
+			editTextProduct2Quantity = (EditText) rootView.findViewById(R.id.editTextProductQuantity2);
+			
+			editTextProduct1Id.setText("product1");
+			editTextProduct1Price.setText("10000");
+			editTextProduct1Quantity.setText("2");
+			
+			editTextProduct2Id.setText("product2");
+			editTextProduct2Price.setText("20000");
+			editTextProduct2Quantity.setText("1");
+			
 			return rootView;
 		}
 
@@ -182,17 +205,30 @@ public class EventActivity extends AppCompatActivity implements ActionBar.TabLis
 		public void onClick(View v) {
 			if (v.getId() == R.id.btnPurchaseEvent) {
 
-				String productId = editTextProductId.getText().toString();
-				String productPrice = editTextProductPrice.getText().toString();
-				String productQuantity = editTextProductQuantity.getText().toString();
+				
+				
+				String productId = editTextProduct1Id.getText().toString();
+				String productPrice = editTextProduct1Price.getText().toString();
+				String productQuantity = editTextProduct1Quantity.getText().toString();
 
 				CaulyTrackerPurchaseEvent purchaseEvent = new CaulyTrackerPurchaseEvent();
 
 				Product product = new Product(productId, productPrice, productQuantity);
+				
+				String product2Id = editTextProduct2Id.getText().toString();
+				String product2Price = editTextProduct2Price.getText().toString();
+				String product2Quantity = editTextProduct2Quantity.getText().toString();
+				
+				int orderPrice = Integer.parseInt(productPrice) * Integer.parseInt(productQuantity);
+				orderPrice += Integer.parseInt(product2Price) * Integer.parseInt(product2Quantity);
+				
+				editTextOrderPrice.setText(""+orderPrice);
+				Product product2 = new Product(product2Id, product2Price, product2Quantity);
 				try {
-					purchaseEvent.setOrderId("test_order_0001");
-					purchaseEvent.setOrderPrice("100,000");
+					purchaseEvent.setOrderId(editTextOrderId.getText().toString());
+					purchaseEvent.setOrderPrice(editTextOrderPrice.getText().toString());
 					purchaseEvent.addProuduct(product);
+					purchaseEvent.addProuduct(product2);
 					purchaseEvent.setCurrencyCode(TrackerConst.CURRENCY_KRW);
 
 					CaulyTrackerBuilder.getTrackerInstance().trackEvent(purchaseEvent);

@@ -9,86 +9,162 @@
     tools:context="com.fsn.cauly.trackertester.EventActivity$PlaceholderFragment" >
 
     <TextView
-        android:id="@+id/textProductName"
+        android:id="@+id/textOrderId"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:text="ProductName" />
+        android:text="OrderId" />
 
     <EditText
-        android:id="@+id/editTextProductName"
+        android:id="@+id/editTextOrderId"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:ems="10"
-        android:hint="ProductName" >
+        android:hint="OrderId" >
 
         <requestFocus />
     </EditText>
 
     <TextView
-        android:id="@+id/textUnitPrice"
+        android:id="@+id/textOrderPrice"
         android:layout_width="wrap_content"
-       android:layout_height="50dp"
-        android:layout_below="@+id/textProductName"
-        android:text="UnitPrice" />
+        android:layout_height="50dp"
+        android:layout_below="@+id/textOrderId"
+        android:text="OrderPrice" />
 
     <EditText
-        android:id="@+id/editTextUnitPrice"
+        android:id="@+id/editTextOrderPrice"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/editTextProductName"
+        android:layout_below="@+id/editTextOrderId"
         android:ems="10"
-        android:hint="UnitPrice" >
+        android:hint="OrderPrice" >
 
         <requestFocus />
     </EditText>
 
     <TextView
-        android:id="@+id/textQuantity"
+        android:id="@+id/textProductId1"
         android:layout_width="wrap_content"
-       android:layout_height="50dp"
-        android:layout_below="@+id/textUnitPrice"
-        android:text="Quantity" />
+        android:layout_height="50dp"
+        android:layout_below="@+id/textOrderPrice"
+        android:text="Product1 Id" />
 
     <EditText
-        android:id="@+id/editTextQuantity"
+        android:id="@+id/editTextProductId1"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/editTextUnitPrice"
+        android:layout_below="@+id/editTextOrderPrice"
         android:ems="10"
-        android:hint="Quantity" >
+        android:hint="product1 Id" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textProductPrice1"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@+id/textProductId1"
+        android:text="Product1 Price" />
+
+    <EditText
+        android:id="@+id/editTextProductPrice1"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/editTextProductId1"
+        android:ems="10"
+        android:hint="Product1 Price" >
 
         <requestFocus />
     </EditText>
     
-     <TextView
-        android:id="@+id/textRevenue"
+    <TextView
+        android:id="@+id/textProductQuantity1"
         android:layout_width="wrap_content"
-       android:layout_height="50dp"
-        android:layout_below="@+id/textQuantity"
-        android:text="Revenue" />
+        android:layout_height="50dp"
+        android:layout_below="@+id/textProductPrice1"
+        android:text="Product1 Quantity" />
 
     <EditText
-        android:id="@+id/editTextRevenue"
+        android:id="@+id/editTextProductQuantity1"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/editTextQuantity"
+        android:layout_below="@+id/editTextProductPrice1"
         android:ems="10"
-        android:hint="Revenue" >
+        android:hint="Product1 Quantity" >
 
         <requestFocus />
     </EditText>
 
+    <TextView
+        android:id="@+id/textProductId2"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@+id/textProductQuantity1"
+        android:text="Product2 Id" />
+
+    <EditText
+        android:id="@+id/editTextProductId2"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/editTextProductQuantity1"
+        android:ems="10"
+        android:hint="Product2 Id" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textProductPrice2"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@+id/textProductId2"
+        android:text="Product2 Price" />
+
+    <EditText
+        android:id="@+id/editTextProductPrice2"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/editTextProductId2"
+        android:ems="10"
+        android:hint="Product2 Price" >
+
+        <requestFocus />
+    </EditText>
+    
+    <TextView
+        android:id="@+id/textProductQuantity2"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@+id/textProductPrice2"
+        android:text="Product2 Quantity" />
+
+    <EditText
+        android:id="@+id/editTextProductQuantity2"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/editTextProductPrice2"
+        android:ems="10"
+        android:hint="Product2 Quantity" >
+
+        <requestFocus />
+    </EditText>
+    
     <Button
         android:id="@+id/btnPurchaseEvent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="49dp"
+        android:layout_marginBottom="30dp"
         android:text="Send PurchaseEvent" />
 
 </RelativeLayout>
