@@ -109,9 +109,19 @@ caulyTracker = caulyTrackerBuilder.setUserId("customer_id_0922451")
 ```
 
 userId, Age, Gender등의 정보는 Builder 로 초기화한 이후 CaulyTracker instance를 통해서도 변경가능합니다.
+
 ```java
-CaulyTrackerBuilder.getTrackerInstance().setAge("20");
-CaulyTrackerBuilder.getTrackerInstance().setGender(TrackerConst.MALE);
+try {
+	CaulyTrackerBuilder.getTrackerInstance().setUserId("user_001");
+	...
+	
+	CaulyTrackerBuilder.getTrackerInstance().setAge("20");
+	...
+	CaulyTrackerBuilder.getTrackerInstance().setGender(TrackerConst.FEMALE);
+	...
+} catch (CaulyException e) {
+	// CaulyTracker Instance not initialized.
+}
 ```
 
 ----------
