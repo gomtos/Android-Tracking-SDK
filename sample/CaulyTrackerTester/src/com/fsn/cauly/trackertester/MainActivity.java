@@ -8,11 +8,14 @@ import com.fsn.cauly.tracker.CaulyTrackerBuilder;
 import com.fsn.cauly.tracker.CaulyTrackerEvent;
 import com.fsn.cauly.tracker.Logger;
 import com.fsn.cauly.tracker.Logger.LogLevel;
+import com.fsn.cauly.tracker.exception.CaulyException;
 import com.fsn.cauly.tracker.TrackerConst;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +41,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		Uri data = this.getIntent().getData();
+		if (data != null && data.isHierarchical()) {
+			String uri = this.getIntent().getDataString();
+			Log.i("MyApp", "Deep link clicked " + uri);
+
+			try {
+				CaulyTrackerBuilder.getTrackerInstance().traceDeepLink(uri);
+			} catch (CaulyException e) {
+				e.printStackTrace();
+			}
+
+		}
+		
 		btnInstall = (Button) findViewById(R.id.btn_install_request);
 		btnInstall.setOnClickListener(this);
 

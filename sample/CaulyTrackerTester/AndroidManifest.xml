@@ -25,8 +25,14 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="caulytrackertest" />
             </intent-filter>
         </activity>
 
@@ -43,16 +49,12 @@
             android:label="@string/title_activity_event" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data
                     android:host="caulytrackertest.com"
                     android:pathPrefix="/purchase"
                     android:scheme="caulytrackertest" />
-
-                <action android:name="android.app.action.ADD_DEVICE_ADMIN" />
             </intent-filter>
         </activity>
         <activity
@@ -62,7 +64,7 @@
 
         <meta-data
             android:name="cauly_track_code"
-            android:value="NEIL_TEST_CODE" />
+            android:value="CAULY_TEST_CODE" />
     </application>
 
 </manifest>
