@@ -33,7 +33,6 @@ CAULY Tracking Android SDK
 			- [Custom Event](#custom-event)
 				- name only sample
 				- name / single param sample
-				- name / defined param sample
 			- [Defined Event](#defined-event)
 				- Purchase
 				- ContentView(Product)
