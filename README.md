@@ -339,8 +339,67 @@ CaulyTrackerBuilder.getTrackerInstance().trackEvent(purchaseEvent);
 ```
 
 ##### ContentView(Product)
-Content에 대한 트래킹
+Content(Product)에 대한 트래킹
+상품의 상세한 정보가 포함된 이벤트입니다.
 
+```java
+final String itemId = "p20160510_test_1";
+final String itemName = "[오늘의 특가] 카울리 반창고!";
+final String itemImage = "https://www.cauly.net/images/logo_cauly_main.png";
+final String itemUrl = "caulytrackertest://caulytracker.com/product?item_id=p20160510_test_1";
+final String originalPrice = "24000";
+final String salePrice = "18000";
+final String category1 = "생활물품";
+final String category2 = "구급";
+
+final String category3 = "";
+final String category4 = "";
+final String category5 = "";
+final String regDate = "";
+final String updateDate = "";
+final String expireDate = "";
+final String stock = "10";
+final String state = "available";
+final String description = " 한번 사용하면 멈출 수 없는 쫄깃함 !";
+final String extraImage = "";
+final String locale = "KRW";
+
+
+CaulyTrackerContentViewEvent caulyTrackerContentViewEvent = new CaulyTrackerContentViewEvent(
+								itemId);
+
+caulyTrackerContentViewEvent.setItemImage(itemImage);
+caulyTrackerContentViewEvent.setItemName(itemName);
+caulyTrackerContentViewEvent.setItemUrl(itemUrl);
+caulyTrackerContentViewEvent.setOriginalPrice(originalPrice);
+caulyTrackerContentViewEvent.setSalePrice(salePrice);
+caulyTrackerContentViewEvent.setCategory1(category1);
+caulyTrackerContentViewEvent.setCategory2(category2);
+
+// Optional info.
+CaulyTrackerContentViewEvent.ContentDetail detail = new CaulyTrackerContentViewEvent.ContentDetail();
+
+detail.setCategory3(category3);
+detail.setCategory4(category4);
+detail.setCategory5(category5);
+detail.setRegDate(regDate);
+detail.setUpdateDate(updateDate);
+detail.setExpireDate(expireDate);
+detail.setStock(stock);
+detail.setState(state);
+detail.setDescription(description);
+detail.setExtraImage(extraImage);
+detail.setLocale(locale);
+
+caulyTrackerContentViewEvent.setDetail(detail);
+
+try {
+	CaulyTrackerBuilder.getTrackerInstance().trackEvent(caulyTrackerContentViewEvent);
+} catch (CaulyException e) {
+	e.printStackTrace();
+}
+
+```
 --------------
 
 Cauly JS Inteface For WebView
