@@ -56,6 +56,9 @@ CAULY Tracking Android SDK
 
 SDK 적용
 ------------
+### 대상 OS 버전
+Android 2.3 이상
+
 ### Project Setting
 #### proguard
 Proguard 적용시에는 SDK에 적용되지 않도록 아래 설정을 추가
