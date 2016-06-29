@@ -12,6 +12,7 @@ CAULY Tracking Android SDK
 | 1.0.2 | 2016.04.28 | 권대화(neilkwon at fsn.co.kr) - 업데이트 내역 |
 | 1.0.3 | 2016.05.16 | 권대화(neilkwon at fsn.co.kr) - 업데이트 내역(Purchase / ContentView(Product) Event 추가) |
 | 1.0.4 | 2016.06.27 | 권대화(neilkwon at fsn.co.kr) - Android version 2.3 대응 |
+| 1.0.5 | 2016.06.29 | 권대화(neilkwon at fsn.co.kr) - ContentView Bug Fix / Install referrer 로직보완 |
 
 ### Table of contents
  - CAULY Tracking Android SDK
