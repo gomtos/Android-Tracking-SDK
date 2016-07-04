@@ -7,12 +7,13 @@ CAULY Tracking Android SDK
 
 | 문서 버전 | 작성 날짜 | 작성자 및 내용 | 
 | ---------- | ----------- | ---------------- |
-| 1.0.0 | 2015.10.09 | 권대화(neilkwon at fsn.co.kr) - 초안작성 |
-| 1.0.1 | 2016.04.06 | 권대화(neilkwon at fsn.co.kr) - 업데이트 내역 |
-| 1.0.2 | 2016.04.28 | 권대화(neilkwon at fsn.co.kr) - 업데이트 내역 |
-| 1.0.3 | 2016.05.16 | 권대화(neilkwon at fsn.co.kr) - 업데이트 내역(Purchase / ContentView(Product) Event 추가) |
-| 1.0.4 | 2016.06.27 | 권대화(neilkwon at fsn.co.kr) - Android version 2.3 대응 |
-| 1.0.5 | 2016.06.29 | 권대화(neilkwon at fsn.co.kr) - ContentView Bug Fix / Install referrer 로직보완 |
+| 1.0.0 | 2015.10.09 | 권대화(neilkwon@fsn.co.kr) - 초안작성 |
+| 1.0.1 | 2016.04.06 | 권대화(neilkwon@fsn.co.kr) - 업데이트 내역 |
+| 1.0.2 | 2016.04.28 | 권대화(neilkwon@fsn.co.kr) - 업데이트 내역 |
+| 1.0.3 | 2016.05.16 | 권대화(neilkwon@fsn.co.kr) - 업데이트 내역(Purchase / ContentView(Product) Event 추가) |
+| 1.0.4 | 2016.06.27 | 권대화(neilkwon@fsn.co.kr) - Android version 2.3 대응 |
+| 1.0.5 | 2016.06.29 | 권대화(neilkwon@fsn.co.kr) - ContentView Bug Fix / Install referrer 로직보완 |
+| 1.0.5 | 2016.07.04 | 권대화(neilkwon@fsn.co.kr) - 정밀성을 위한 추가 정보 전송 |
 
 ### Table of contents
  - CAULY Tracking Android SDK
