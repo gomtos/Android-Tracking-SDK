@@ -19,7 +19,7 @@ Android Native APP
 ### 목차
 - [연동 절차](#연동-절차)
 - [연동 상세](#연동-상세)
-  - [Native APP SDK 연동](#Native-APP-SDK-연동)
+  - [Native APP SDK 연동](#native-app-sdk-연동)
   - [Deep Link 처리 (해당시에만)]()
   - [Event 처리](#event)
 
