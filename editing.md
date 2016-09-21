@@ -68,7 +68,7 @@ caulyTracker.traceDeepLink(deepLinkStr);
 | PURCHASE | - 추천상품에서 구매상품 제외 처리 <br>- ROAS 측정 | (PURCHASE 이벤트) |
 | RE-PURCHASE | - 재구매율 측정 (optional) | (RE-PURCHASE 이벤트) |
 
-#### B. Static 켐페인
+#### B. Static 캠페인
 | 이벤트명 | 목적 | 연동 가이드 |
 | -------- | ----- | --------- |
 | OPEN | - 리타겟팅 광고 노출 대상자 선정 | (OPEN 이벤트) |
