@@ -19,12 +19,13 @@ Android Native APP
 ### 목차
 - [연동 절차](#연동-절차)
 - [연동 상세](#연동-상세)
-  - [Native APP SDK 연동]()
+  - [Native APP SDK 연동](#Native-APP-SDK-연동)
   - [Deep Link 처리 (해당시에만)]()
   - [Event 처리](#event)
 
+--------------------------
+
 ### 연동 절차
-------------
 
 1. Cauly 담당자 혹은 fsn_rt@fsn.co.kr로 연락하여 Cauly 리타겟팅 연동에 대해서 협의합니다.
 1. 협의 완료 후, Cauly 담당자를 통해 track_code를 발급받습니다.
