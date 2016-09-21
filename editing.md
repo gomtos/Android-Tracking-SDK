@@ -205,7 +205,7 @@ public class OtherInstallReceiver extends BroadcastReceiver {
 
 
 #### DeepLink 처리 (해당시에만)
-광고주의 APP이 Deep Link를 지원하여 유저가 광고를 클릭 했을 때 랜딩하는 위치가 APP의 메인 페이지가 아닌 다른 특정 페이지 (또는 상품상세페이지)인 경우에만 해당되는 사항입니다. 해당사항이 없을 경우 3. Event 처리 단계로 넘어갑니다.
+광고주의 APP이 Deep Link를 지원하여 유저가 광고를 클릭 했을 때 랜딩하는 위치가 APP의 메인 페이지가 아닌 다른 특정 페이지 (또는 상품상세페이지)인 경우에만 해당되는 사항입니다. 해당사항이 없을 경우 Event 처리 단계로 넘어갑니다.
 ```java
 // 아래 String 처럼 DeekLink 가 들어왔다고 가정하면
 // String deepLinkStr = "someapp://app/?cauly_rt_code=1234&cauly_egmt_sec=8600"; 
