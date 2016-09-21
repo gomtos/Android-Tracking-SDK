@@ -21,7 +21,7 @@ Android Native APP
 - [연동 상세](#연동-상세)
   - [Native APP SDK 연동](#native-app-sdk-연동)
   - [Deep Link 처리 (해당시에만)](#deeplink-처리-해당시에만)
-  - [Event 처리](#event)
+  - [Event 처리](#event-처리)
 
 --------------------------
 
@@ -221,84 +221,89 @@ caulyTracker.traceDeepLink(deepLinkStr);
 #### A.	Feed 캠페인
 | 이벤트명 | 목적 | 연동 가이드 |
 | -------- | ----- | --------- |
-| OPEN | - 리타겟팅 광고 노출 대상자 선정 | (OPEN 이벤트) |
-| PRODUCT | - 광고노출 대상자 별 추천 상품목록 생성 <br>- 상품이미지 및 정보를 광고 소재로 활용 | (상품 view 이벤트) |
-| PURCHASE | - 추천상품에서 구매상품 제외 처리 <br>- ROAS 측정 | (PURCHASE 이벤트) |
-| RE-PURCHASE | - 재구매율 측정 (optional) | (RE-PURCHASE 이벤트) |
+| OPEN | - 리타겟팅 광고 노출 대상자 선정 | [OPEN 이벤트](#open-이벤트) |
+| PRODUCT | - 광고노출 대상자 별 추천 상품목록 생성 <br>- 상품이미지 및 정보를 광고 소재로 활용 | [상품-view-이벤트](#상품-view-이벤트) |
+| PURCHASE | - 추천상품에서 구매상품 제외 처리 <br>- ROAS 측정 | [PURCHASE 이벤트](purchase-이벤트) |
+| RE-PURCHASE | - 재구매율 측정 (option) | [RE-PURCHASE 이벤트](re-purchase-이벤트) |
 
 #### B. Static 캠페인
 | 이벤트명 | 목적 | 연동 가이드 |
 | -------- | ----- | --------- |
-| OPEN | - 리타겟팅 광고 노출 대상자 선정 | (OPEN 이벤트) |
-| CA_CONVERSION | - 전환 건수 측정 <br>- 예) 상담신청완료 등 | (Conversion 이벤트) |
+| OPEN | - 리타겟팅 광고 노출 대상자 선정 | [OPEN 이벤트](#open-이벤트) |
+| CA_CONVERSION | - 전환 건수 측정 <br>- 예) 상담신청완료 등 | [Conversion 이벤트](#conversion-이벤트) |
 
-
-##### SDK 구조
-###### CaulyTrackerBuilder
-기본적인 설정 정보와 함께 CaulyTracker instance를 초기화합니다.
-<br>
-![CaulyTracker class](misc/CaulyTrackerBuilder.png)
-
-
-###### CaulyTracker
-Event를 Tracking 할 수 있는 method들을 제공합니다.
-<br>
-![CaulyTracker class](misc/CaulyTracker.png)
-
-
-##### CaulyTrackerBuilder를 통한 초기화
-| Method | mandatory | Description |
-| --------- | ------------- | ------------- |
-| setUserId | optional | 각 서비스를 사용하는 사용자의 고유 ID |
-| setAge | optional | 사용자의 연령<br>연령 정보를 추가하면 더욱 세밀한 분석이 가능합니다.|
-| setGender | optional | 사용자의 성별<br>성별 정보를 추가하면 더욱 세밀한 분석이 가능합니다. |
-| setLogLevel | optional | 로그 출력 level<br>default : Info
-| build | mandatory | tracker instance를 생성 |
-
-###### Sample
+##### OPEN 이벤트
 ```java
-CaulyTrackerBuilder caulyTrackerBuilder = new CaulyTrackerBuilder(getApplicationContext());
-
-caulyTracker = caulyTrackerBuilder.setUserId("customer_id_0922451")
-				.setAge("25")
-				.setGender(TrackerConst.FEMALE)
-				.setLogLevel(LogLevel.Debug)
-				.build();
+CaulyTracker caulyTracker = CaulyTrackerBuilder.getTrackerInstance();
+caulyTracker.trackEvent("OPEN");
 ```
 
-userId, Age, Gender등의 정보는 Builder 로 초기화한 이후 CaulyTracker instance를 통해서도 변경가능합니다.
-
+##### 상품 view 이벤트
 ```java
-try {
-	CaulyTrackerBuilder.getTrackerInstance().setUserId("user_001");
-	...
-	
-	CaulyTrackerBuilder.getTrackerInstance().setAge("20");
-	...
-	CaulyTrackerBuilder.getTrackerInstance().setGender(TrackerConst.FEMALE);
-	...
-} catch (CaulyException e) {
-	// CaulyTracker Instance not initialized.
-}
+String productId = "987654321"; // 광고주의 product id 를 987654321 라 가정하면
+CaulyTracker caulyTracker = CaulyTrackerBuilder.getTrackerInstance();
+caulyTracker.trackEvent("PRODUCT", productId);
 ```
 
-----------
-##### Webview를 사용하는 Hybrid App 적용 가이드
-CaulyTracker Web SDK ( javascript version ) 을 사용는 Hybrid의 앱의 경우 App/Web의 더욱 정교한 Tracking 기능을 사용하고자 할 경우에는 [<i class="icon-file"></i> Cauly JS Inteface For WebView](#CaulyJSIntefaceForWebView) section을 참조해주세요.
- 
-###### samlple
+##### PURCHASE 이벤트
 ```java
-Webview web = new WebView(getApplicationContext());
-web.addJavascriptInterface(new CaulyJsInterface(web),CaulyJsInterface.CAULY_JS_INTERFACE_NAME);
+// 유저가 구매한 20000원짜리 (product id "987654321") 3개와 10000원짜리 (product id "887654321") 1개를 샀고,
+// 그래서 총 구매액은 70000원이고,
+// 광고주가 발급한 구매 id(order id) 가 "order_20160430" 라고 가정하면,
+CaulyTrackerPurchaseEvent purchaseEvent = new CaulyTrackerPurchaseEvent();
+
+String productId = "987654321";
+String productPrice = "20000";
+String productQuantity = "3";
+Product product = new Product(productId, productPrice, productQuantity);
+
+String productId2 = "887654321";
+String productPrice2 = "10000";
+String productQuantity2 = "1";
+Product product = new Product(productId2, productPrice2, productQuantity2);
+
+purchaseEvent.setOrderId("order_20160430");
+purchaseEvent.setOrderPrice("70000");
+purchaseEvent.addProuduct(product);
+purchaseEvent.addProuduct(product2);
+purchaseEvent.setCurrencyCode(TrackerConst.CURRENCY_KRW);
+
+CaulyTrackerBuilder.getTrackerInstance().trackEvent(purchaseEvent);
 ```
-
-UIWebView를 사용하는 Hybrid App이 아닌 일반 브라우저에서 접근가능한 Web의 경우에는 해당 메시지를 호출하지않도록 조치를 해주어야 합니다.
 
-------------------
+##### Re-Purchase 이벤트
+재구매(첫 구매가 아닌) 유저를 골라서 분류해보고 싶으면 아래처럼 한 줄 추가된 코드를 사용합니다.
+```java
+CaulyTrackerPurchaseEvent purchaseEvent = new CaulyTrackerPurchaseEvent();
 
-
+String productId = "p_0344411";
+String productPrice = "20000";
+String productQuantity = "3";
+Product product = new Product(productId, productPrice, productQuantity);
+
+String productId2 = "p_0344412";
+String productPrice2 = "10000";
+String productQuantity2 = "1";
+Product product = new Product(productId2, productPrice2, productQuantity2);
+
+// 아래 한 줄을 추가합니다
+purchaseEvent.setPurchaseType("RE-PURCHASE");
+// 한 줄 추가 끝
+purchaseEvent.setOrderId("order_20160430");
+purchaseEvent.setOrderPrice("70000");
+purchaseEvent.addProuduct(product);
+purchaseEvent.addProuduct(product2);
+purchaseEvent.setCurrencyCode(TrackerConst.CURRENCY_KRW);
+
+CaulyTrackerBuilder.getTrackerInstance().trackEvent(purchaseEvent);
+```
+
+##### Conversion 이벤트
+```java
+CaulyTracker caulyTracker = CaulyTrackerBuilder.getTrackerInstance();
+caulyTracker.trackEvent("CA_CONVERSION");
+```
 ##### Event
-사용자 또는 System에서 발생하는 Event를 Tracking 합니다.
 
 ###### Custom Event
 | Parameter | Required | Description |
@@ -414,6 +419,69 @@ try {
 }
 
 ```
+
+
+##### SDK 구조
+###### CaulyTrackerBuilder
+기본적인 설정 정보와 함께 CaulyTracker instance를 초기화합니다.
+<br>
+![CaulyTracker class](misc/CaulyTrackerBuilder.png)
+
+
+###### CaulyTracker
+Event를 Tracking 할 수 있는 method들을 제공합니다.
+<br>
+![CaulyTracker class](misc/CaulyTracker.png)
+
+
+##### CaulyTrackerBuilder를 통한 초기화
+| Method | mandatory | Description |
+| --------- | ------------- | ------------- |
+| setUserId | optional | 각 서비스를 사용하는 사용자의 고유 ID |
+| setAge | optional | 사용자의 연령<br>연령 정보를 추가하면 더욱 세밀한 분석이 가능합니다.|
+| setGender | optional | 사용자의 성별<br>성별 정보를 추가하면 더욱 세밀한 분석이 가능합니다. |
+| setLogLevel | optional | 로그 출력 level<br>default : Info
+| build | mandatory | tracker instance를 생성 |
+
+###### Sample
+```java
+CaulyTrackerBuilder caulyTrackerBuilder = new CaulyTrackerBuilder(getApplicationContext());
+
+caulyTracker = caulyTrackerBuilder.setUserId("customer_id_0922451")
+				.setAge("25")
+				.setGender(TrackerConst.FEMALE)
+				.setLogLevel(LogLevel.Debug)
+				.build();
+```
+
+userId, Age, Gender등의 정보는 Builder 로 초기화한 이후 CaulyTracker instance를 통해서도 변경가능합니다.
+
+```java
+try {
+	CaulyTrackerBuilder.getTrackerInstance().setUserId("user_001");
+	...
+	
+	CaulyTrackerBuilder.getTrackerInstance().setAge("20");
+	...
+	CaulyTrackerBuilder.getTrackerInstance().setGender(TrackerConst.FEMALE);
+	...
+} catch (CaulyException e) {
+	// CaulyTracker Instance not initialized.
+}
+```
+
+----------
+##### Webview를 사용하는 Hybrid App 적용 가이드
+CaulyTracker Web SDK ( javascript version ) 을 사용는 Hybrid의 앱의 경우 App/Web의 더욱 정교한 Tracking 기능을 사용하고자 할 경우에는 [<i class="icon-file"></i> Cauly JS Inteface For WebView](#CaulyJSIntefaceForWebView) section을 참조해주세요.
+ 
+###### samlple
+```java
+Webview web = new WebView(getApplicationContext());
+web.addJavascriptInterface(new CaulyJsInterface(web),CaulyJsInterface.CAULY_JS_INTERFACE_NAME);
+```
+
+UIWebView를 사용하는 Hybrid App이 아닌 일반 브라우저에서 접근가능한 Web의 경우에는 해당 메시지를 호출하지않도록 조치를 해주어야 합니다.
+
 --------------
 
 Cauly JS Inteface For WebView
