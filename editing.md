@@ -43,8 +43,8 @@ Android Native APP
 | ---------- | -------------- | ----------- | --------------- |
 | Setting | proguard | proguard 세팅 | [Proguard 부분 참고](#proguard) |
 | | AndroidManifest.xml – track_code 추가 | track_code 추가 | [Initialize 부분 참고](#initialize) |
-| Setting & Code | AndroidManifest.xml – Install referrer 추가 (optional) | install 수 측정 | [Install referrer 부분 참고](#install-referrer-check) |
-| 초기화 Code | Session | 앱 실행 측정 | [“Session” 부분 참고](#session) |
+| Setting & Code | AndroidManifest.xml – Install referrer 추가 (option) | install 수 측정 | [Install referrer 부분 참고](#install-referrer-check) |
+| 초기화 Code | Session | 앱 실행 측정 | [Session 부분 참고](#session) |
 
 ##### Proguard
 Proguard 적용시에는 SDK에 적용되지 않도록 아래 설정을 추가
