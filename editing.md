@@ -34,6 +34,10 @@ Android Native APP
 1. 마켓 업데이트 완료 후 7일 뒤 (주말 및 공휴일 포함) 광고 라이브 가능합니다. (단, 모수가 너무 적을 경우 모수 수집을 위해 추가 시간이 소요될 수 있습니다.)
 
 ### 연동 상세
+------------
+#### Native APP SDK 연동
+대상 OS 버전: Android 2.3 이상
+
 | 항목 | 세부항목 | 목적 | 연동 가이드 |
 | ---------- | -------------- | ----------- | --------------- |
 | Setting | proguard | proguard 세팅 | [“Proguard” 부분 참고](#proguard) |
@@ -41,12 +45,37 @@ Android Native APP
 | Setting & Code | AndroidManifest.xml – Install referral 추가 (optional) | install 수 측정 | |
 | 초기화 Code | Session | 앱 실행 측정 | [“Session” 부분 참고](#session) |
 
-------------
-#### Native APP SDK 연동
-대상 OS 버전: Android 2.3 이상
+#### DeepLink 처리 (해당시에만)
+광고주의 APP이 Deep Link를 지원하여 유저가 광고를 클릭 했을 때 랜딩하는 위치가 APP의 메인 페이지가 아닌 다른 특정 페이지 (또는 상품상세페이지)인 경우에만 해당되는 사항입니다. 해당사항이 없을 경우 3. Event 처리 단계로 넘어갑니다.
+```java
+// 아래 String 처럼 DeekLink 가 들어왔다고 가정하면
+// String deepLinkStr = "someapp://app/?cauly_rt_code=1234&cauly_egmt_sec=8600"; 
+CaulyTracker caulyTracker = CaulyTrackerBuilder.getTrackerInstance();
+caulyTracker.traceDeepLink(deepLinkStr);
+```
+
+#### Event 처리
+아래 2가지 캠페인 중 집행 예정인 캠페인에 맞게 code 를 삽입합니다.
+- A. Feed 캠페인
+- B. Static 캠페인
+
+#### A.	Feed 캠페인
+| 이벤트명 | 목적 | 연동 가이드 |
+| -------- | ----- | --------- |
+| OPEN | - 리타겟팅 광고 노출 대상자 선정 | (OPEN 이벤트) |
+| PRODUCT | - 광고노출 대상자 별 추천 상품목록 생성 - 상품이미지 및 정보를 광고 소재로 활용 | (상품 view 이벤트) |
+| PURCHASE | - 추천상품에서 구매상품 제외 처리 - ROAS 측정 | (PURCHASE 이벤트) |
+| RE-PURCHASE | - 재구매율 측정 (optional) | (RE-PURCHASE 이벤트) |
+
+#### B. Static 켐페인
+| 이벤트명 | 목적 | 연동 가이드 |
+| -------- | ----- | --------- |
+| OPEN | - 리타겟팅 광고 노출 대상자 선정 | (OPEN 이벤트) |
+| CA_CONVERSION | - 전환 건수 측정 - 예) 상담신청완료 등 | (Conversion 이벤트) |
+
 
 ##### Project Setting
-###### proguard
+###### Proguard
 Proguard 적용시에는 SDK에 적용되지 않도록 아래 설정을 추가
 ```
 -keep class com.fsn.cauly.tracker.** { *; }
