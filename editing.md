@@ -22,6 +22,7 @@ Android Native APP
   - [Native APP SDK 연동](#native-app-sdk-연동)
   - [Deep Link 처리 (해당시에만)](#deeplink-처리-해당시에만)
   - [Event 처리](#event-처리)
+  - [Reference](#reference)
 
 --------------------------
 
@@ -222,7 +223,8 @@ caulyTracker.traceDeepLink(deepLinkStr);
 | 이벤트명 | 목적 | 연동 가이드 |
 | -------- | ----- | --------- |
 | OPEN | - 리타겟팅 광고 노출 대상자 선정 | [OPEN 이벤트](#open-이벤트) |
-| PRODUCT | - 광고노출 대상자 별 추천 상품목록 생성 <br>- 상품이미지 및 정보를 광고 소재로 활용 | [상품-VIEW-이벤트](#상품-view-이벤트) |
+| PRODUCT | - 광고노출 대상자 별 추천 상품목록 생성 | [상품 VIEW 이벤트](#상품-view-이벤트) |
+| CONTENT | - 상품이미지 및 상품 상세정보를 광고 소재로 활용 | [ContentView 이벤트](#contentview-이벤트) |
 | PURCHASE | - 추천상품에서 구매상품 제외 처리 <br>- ROAS 측정 | [PURCHASE 이벤트](#purchase-이벤트) |
 | RE-PURCHASE | - 재구매율 측정 (option) | [RE-PURCHASE 이벤트](#re-purchase-이벤트) |
 
@@ -243,6 +245,66 @@ caulyTracker.trackEvent("OPEN");
 String productId = "987654321"; // 광고주의 product id 를 987654321 라 가정하면
 CaulyTracker caulyTracker = CaulyTrackerBuilder.getTrackerInstance();
 caulyTracker.trackEvent("PRODUCT", productId);
+```
+
+##### ContentView 이벤트
+```java
+final String itemId = "p20160510_test_1";
+final String itemName = "[오늘의 특가] 카울리 반창고!";
+final String itemImage = "https://www.cauly.net/images/logo_cauly_main.png";
+final String itemUrl = "caulytrackertest://caulytracker.com/product?item_id=p20160510_test_1";
+final String originalPrice = "24000";
+final String salePrice = "18000";
+final String category1 = "생활물품";
+final String category2 = "구급";
+
+final String category3 = "";
+final String category4 = "";
+final String category5 = "";
+final String regDate = "";
+final String updateDate = "";
+final String expireDate = "";
+final String stock = "10";
+final String state = "available";
+final String description = " 한번 사용하면 멈출 수 없는 쫄깃함 !";
+final String extraImage = "";
+final String locale = "KRW";
+
+
+CaulyTrackerContentViewEvent caulyTrackerContentViewEvent = new CaulyTrackerContentViewEvent(
+								itemId);
+
+caulyTrackerContentViewEvent.setItemImage(itemImage);
+caulyTrackerContentViewEvent.setItemName(itemName);
+caulyTrackerContentViewEvent.setItemUrl(itemUrl);
+caulyTrackerContentViewEvent.setOriginalPrice(originalPrice);
+caulyTrackerContentViewEvent.setSalePrice(salePrice);
+caulyTrackerContentViewEvent.setCategory1(category1);
+caulyTrackerContentViewEvent.setCategory2(category2);
+
+// Optional info.
+CaulyTrackerContentViewEvent.ContentDetail detail = new CaulyTrackerContentViewEvent.ContentDetail();
+
+detail.setCategory3(category3);
+detail.setCategory4(category4);
+detail.setCategory5(category5);
+detail.setRegDate(regDate);
+detail.setUpdateDate(updateDate);
+detail.setExpireDate(expireDate);
+detail.setStock(stock);
+detail.setState(state);
+detail.setDescription(description);
+detail.setExtraImage(extraImage);
+detail.setLocale(locale);
+
+caulyTrackerContentViewEvent.setDetail(detail);
+
+try {
+	CaulyTrackerBuilder.getTrackerInstance().trackEvent(caulyTrackerContentViewEvent);
+} catch (CaulyException e) {
+	e.printStackTrace();
+}
+
 ```
 
 ##### PURCHASE 이벤트
@@ -303,123 +365,10 @@ CaulyTrackerBuilder.getTrackerInstance().trackEvent(purchaseEvent);
 CaulyTracker caulyTracker = CaulyTrackerBuilder.getTrackerInstance();
 caulyTracker.trackEvent("CA_CONVERSION");
 ```
-##### Event
 
-###### Custom Event
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| event_name | mandatory | 트래킹할 이벤트명 |
-| event_param | optional | 세부 정보 등 이벤트에 추가적으로 기입할 값 |
+---------------------
 
-
-####### name only sample
-```java
-caulyTracker.trackEvent("event1_nameonly");
-```
-####### name / single param sample
-```java
-caulyTracker.trackEvent("event2_string", "test");
-```
-
-###### Defined Event
-자주 사용되거나 또는 중요하다 판단되는 Event에 대한 선정의된 Event입니다.
-
-####### Purchase
-구매 또는 지불이 발생하였을때 호출
-
-| Parameter | Type |Required | Default | Description |
-| --------- | ---- | ------- | ------- | ----------- |
-| order_id | String | mandatory | - | Order ID |
-| order_price | String | mandatory | - | 발생한 전체 금액 |
-| purchase_type | String | optional | - | 구매의 성격<br>eg)재구매 : RE-PURCHASE |
-| product_infos | List<Product> | mandatory | - | 구매된 상품의 상세 정보 목록<br>최소 1개 이상 상품이 등록되어야 합니다. |
-| currency_code | String | optional | KRW | 통화 코드 |
-
-```java
-CaulyTrackerPurchaseEvent purchaseEvent = new CaulyTrackerPurchaseEvent();
-
-String productId = "p_0344411";
-String productPrice = "20000";
-String productQuantity = "3";
-Product product = new Product(productId, productPrice, productQuantity);
-
-String productId2 = "p_0344412";
-String productPrice2 = "10000";
-String productQuantity2 = "1";
-Product product = new Product(productId2, productPrice2, productQuantity2);
-
-purchaseEvent.setOrderId("order_20160430");
-purchaseEvent.setOrderPrice("70000");
-purchaseEvent.addProuduct(product);
-purchaseEvent.addProuduct(product2);
-purchaseEvent.setCurrencyCode(TrackerConst.CURRENCY_KRW);
-
-CaulyTrackerBuilder.getTrackerInstance().trackEvent(purchaseEvent);
-```
-
-####### ContentView(Product)
-Content(Product)에 대한 트래킹
-상품의 상세한 정보가 포함된 이벤트입니다.
-
-```java
-final String itemId = "p20160510_test_1";
-final String itemName = "[오늘의 특가] 카울리 반창고!";
-final String itemImage = "https://www.cauly.net/images/logo_cauly_main.png";
-final String itemUrl = "caulytrackertest://caulytracker.com/product?item_id=p20160510_test_1";
-final String originalPrice = "24000";
-final String salePrice = "18000";
-final String category1 = "생활물품";
-final String category2 = "구급";
-
-final String category3 = "";
-final String category4 = "";
-final String category5 = "";
-final String regDate = "";
-final String updateDate = "";
-final String expireDate = "";
-final String stock = "10";
-final String state = "available";
-final String description = " 한번 사용하면 멈출 수 없는 쫄깃함 !";
-final String extraImage = "";
-final String locale = "KRW";
-
-
-CaulyTrackerContentViewEvent caulyTrackerContentViewEvent = new CaulyTrackerContentViewEvent(
-								itemId);
-
-caulyTrackerContentViewEvent.setItemImage(itemImage);
-caulyTrackerContentViewEvent.setItemName(itemName);
-caulyTrackerContentViewEvent.setItemUrl(itemUrl);
-caulyTrackerContentViewEvent.setOriginalPrice(originalPrice);
-caulyTrackerContentViewEvent.setSalePrice(salePrice);
-caulyTrackerContentViewEvent.setCategory1(category1);
-caulyTrackerContentViewEvent.setCategory2(category2);
-
-// Optional info.
-CaulyTrackerContentViewEvent.ContentDetail detail = new CaulyTrackerContentViewEvent.ContentDetail();
-
-detail.setCategory3(category3);
-detail.setCategory4(category4);
-detail.setCategory5(category5);
-detail.setRegDate(regDate);
-detail.setUpdateDate(updateDate);
-detail.setExpireDate(expireDate);
-detail.setStock(stock);
-detail.setState(state);
-detail.setDescription(description);
-detail.setExtraImage(extraImage);
-detail.setLocale(locale);
-
-caulyTrackerContentViewEvent.setDetail(detail);
-
-try {
-	CaulyTrackerBuilder.getTrackerInstance().trackEvent(caulyTrackerContentViewEvent);
-} catch (CaulyException e) {
-	e.printStackTrace();
-}
-
-```
-
+#### Reference
 
 ##### SDK 구조
 ###### CaulyTrackerBuilder
@@ -582,5 +531,125 @@ Android Play service에서 제공하는 Google Advertising ID를 얻습니다.
 </body>
 </html>
 ```
+
+##### Event
+
+###### Custom Event
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| event_name | mandatory | 트래킹할 이벤트명 |
+| event_param | optional | 세부 정보 등 이벤트에 추가적으로 기입할 값 |
+
+
+####### name only sample
+```java
+caulyTracker.trackEvent("event1_nameonly");
+```
+####### name / single param sample
+```java
+caulyTracker.trackEvent("event2_string", "test");
+```
+
+###### Defined Event
+자주 사용되거나 또는 중요하다 판단되는 Event에 대한 선정의된 Event입니다.
+
+####### Purchase
+구매 또는 지불이 발생하였을때 호출
+
+| Parameter | Type |Required | Default | Description |
+| --------- | ---- | ------- | ------- | ----------- |
+| order_id | String | mandatory | - | Order ID |
+| order_price | String | mandatory | - | 발생한 전체 금액 |
+| purchase_type | String | optional | - | 구매의 성격<br>eg)재구매 : RE-PURCHASE |
+| product_infos | List<Product> | mandatory | - | 구매된 상품의 상세 정보 목록<br>최소 1개 이상 상품이 등록되어야 합니다. |
+| currency_code | String | optional | KRW | 통화 코드 |
+
+```java
+CaulyTrackerPurchaseEvent purchaseEvent = new CaulyTrackerPurchaseEvent();
+
+String productId = "p_0344411";
+String productPrice = "20000";
+String productQuantity = "3";
+Product product = new Product(productId, productPrice, productQuantity);
+
+String productId2 = "p_0344412";
+String productPrice2 = "10000";
+String productQuantity2 = "1";
+Product product = new Product(productId2, productPrice2, productQuantity2);
+
+purchaseEvent.setOrderId("order_20160430");
+purchaseEvent.setOrderPrice("70000");
+purchaseEvent.addProuduct(product);
+purchaseEvent.addProuduct(product2);
+purchaseEvent.setCurrencyCode(TrackerConst.CURRENCY_KRW);
+
+CaulyTrackerBuilder.getTrackerInstance().trackEvent(purchaseEvent);
+```
+
+####### ContentView(Product)
+Content(Product)에 대한 트래킹
+상품의 상세한 정보가 포함된 이벤트입니다.
+
+```java
+final String itemId = "p20160510_test_1";
+final String itemName = "[오늘의 특가] 카울리 반창고!";
+final String itemImage = "https://www.cauly.net/images/logo_cauly_main.png";
+final String itemUrl = "caulytrackertest://caulytracker.com/product?item_id=p20160510_test_1";
+final String originalPrice = "24000";
+final String salePrice = "18000";
+final String category1 = "생활물품";
+final String category2 = "구급";
+
+final String category3 = "";
+final String category4 = "";
+final String category5 = "";
+final String regDate = "";
+final String updateDate = "";
+final String expireDate = "";
+final String stock = "10";
+final String state = "available";
+final String description = " 한번 사용하면 멈출 수 없는 쫄깃함 !";
+final String extraImage = "";
+final String locale = "KRW";
+
+
+CaulyTrackerContentViewEvent caulyTrackerContentViewEvent = new CaulyTrackerContentViewEvent(
+								itemId);
+
+caulyTrackerContentViewEvent.setItemImage(itemImage);
+caulyTrackerContentViewEvent.setItemName(itemName);
+caulyTrackerContentViewEvent.setItemUrl(itemUrl);
+caulyTrackerContentViewEvent.setOriginalPrice(originalPrice);
+caulyTrackerContentViewEvent.setSalePrice(salePrice);
+caulyTrackerContentViewEvent.setCategory1(category1);
+caulyTrackerContentViewEvent.setCategory2(category2);
+
+// Optional info.
+CaulyTrackerContentViewEvent.ContentDetail detail = new CaulyTrackerContentViewEvent.ContentDetail();
+
+detail.setCategory3(category3);
+detail.setCategory4(category4);
+detail.setCategory5(category5);
+detail.setRegDate(regDate);
+detail.setUpdateDate(updateDate);
+detail.setExpireDate(expireDate);
+detail.setStock(stock);
+detail.setState(state);
+detail.setDescription(description);
+detail.setExtraImage(extraImage);
+detail.setLocale(locale);
+
+caulyTrackerContentViewEvent.setDetail(detail);
+
+try {
+	CaulyTrackerBuilder.getTrackerInstance().trackEvent(caulyTrackerContentViewEvent);
+} catch (CaulyException e) {
+	e.printStackTrace();
+}
+
+```
+
+
+
 
 
