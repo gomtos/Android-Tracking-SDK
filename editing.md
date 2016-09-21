@@ -41,9 +41,9 @@ Android Native APP
 
 | 항목 | 세부항목 | 목적 | 연동 가이드 |
 | ---------- | -------------- | ----------- | --------------- |
-| Setting | proguard | proguard 세팅 | [“Proguard” 부분 참고](#proguard) |
-| | AndroidManifest.xml – track_code 추가 | track_code 추가 | [“Initialize” 부분 참고](#initialize) |
-| Setting & Code | AndroidManifest.xml – Install referral 추가 (optional) | install 수 측정 | |
+| Setting | proguard | proguard 세팅 | [Proguard 부분 참고](#proguard) |
+| | AndroidManifest.xml – track_code 추가 | track_code 추가 | [Initialize 부분 참고](#initialize) |
+| Setting & Code | AndroidManifest.xml – Install referrer 추가 (optional) | install 수 측정 | [Install referrer 부분 참고](#install-referrer-check) |
 | 초기화 Code | Session | 앱 실행 측정 | [“Session” 부분 참고](#session) |
 
 ##### Proguard
@@ -112,6 +112,95 @@ protected void onDestroy() {
 		e.printStackTrace();
 	}
 }
+```
+
+##### Install Referrer Check
+앱 인스톨 시점에 설치 정보를 전송합니다.
+Install Referer를 사용하는 방법은 아래의 2가지 형태가 있습니다. ( 하나의 방식만 구현)
+ 
+- XML - CaulyTracker를 단독 Install referrer receiver 사용할때
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.neilkwon.fsntrackertester"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="21" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <receiver android:name="com.fsn.cauly.tracker.InstallReceiver">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER"/>
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="cauly_track_code"
+            android:value="NEIL_TEST_CODE" />
+
+    </application>
+
+</manifest>
+```
+
+Source - 다수의 Install referrer receiver를 사용할 때
+- INSTALL_REFERRER broadcast receiver로 등록된 Class 에서 아래와 같이 추가.
+
+```java
+import com.fsn.cauly.tracker.InstallReceiver;
+
+public class OtherInstallReceiver extends BroadcastReceiver {
+
+	public OtherInstallReceiver() {
+
+	}
+
+	@Override
+	public void onReceive(Context context, Intent intent) {
+		if (intent.getAction().equals("com.android.vending.INSTALL_REFERRER")) {
+			String referrerStr = intent.getStringExtra("referrer");
+			if (referrerStr != null) {
+				try {
+
+					//Cauly Install check
+					// 간단한 설치 정보만 전송
+					InstallReceiver installReceiver = new InstallReceiver();
+					installReceiver.onReceive(context, intent);
+
+					// Other tracker 1 - 타사SDK
+					InstallReceiverEtc1  installReceiverEtc1 = new InstallReceiverEtc1();
+					installReceiverEtc1.onReceive(context, intent);
+
+					// Other tracker 2 - 타사SDK
+					InstallReceiverEtc2 installReceiverEtc2 = new InstallReceiverEtc2();
+					installReceiverEtc2.onReceive(context, intent);
+
+				} catch (Exception e) {
+
+				}
+			}
+		}
+	}
+
+}
+
 ```
 
 
@@ -204,98 +293,6 @@ web.addJavascriptInterface(new CaulyJsInterface(web),CaulyJsInterface.CAULY_JS_I
 ```
 
 UIWebView를 사용하는 Hybrid App이 아닌 일반 브라우저에서 접근가능한 Web의 경우에는 해당 메시지를 호출하지않도록 조치를 해주어야 합니다.
-
-
-------------------
-
-##### Install Referrer Check
-앱 인스톨 시점에 설치 정보를 전송합니다.
-Install Referer를 사용하는 방법은 아래의 2가지 형태가 있습니다. ( 하나의 방식만 구현)
- 
-- XML - CaulyTracker를 단독 Install referrer receiver 사용할때
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.neilkwon.fsntrackertester"
-    android:versionCode="1"
-    android:versionName="1.0" >
-
-    <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="21" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-
-    <application
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <receiver android:name="com.fsn.cauly.tracker.InstallReceiver">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER"/>
-            </intent-filter>
-        </receiver>
-
-        <meta-data
-            android:name="cauly_track_code"
-            android:value="NEIL_TEST_CODE" />
-
-    </application>
-
-</manifest>
-```
-
-Source - 다수의 Install referrer receiver를 사용할 때
-- INSTALL_REFERRER broadcast receiver로 등록된 Class 에서 아래와 같이 추가.
-
-```java
-import com.fsn.cauly.tracker.InstallReceiver;
-
-public class OtherInstallReceiver extends BroadcastReceiver {
-
-	public OtherInstallReceiver() {
-
-	}
-
-	@Override
-	public void onReceive(Context context, Intent intent) {
-		if (intent.getAction().equals("com.android.vending.INSTALL_REFERRER")) {
-			String referrerStr = intent.getStringExtra("referrer");
-			if (referrerStr != null) {
-				try {
-
-					//Cauly Install check
-					// 간단한 설치 정보만 전송
-					InstallReceiver installReceiver = new InstallReceiver();
-					installReceiver.onReceive(context, intent);
-
-					// Other tracker 1 - 타사SDK
-					InstallReceiverEtc1  installReceiverEtc1 = new InstallReceiverEtc1();
-					installReceiverEtc1.onReceive(context, intent);
-
-					// Other tracker 2 - 타사SDK
-					InstallReceiverEtc2 installReceiverEtc2 = new InstallReceiverEtc2();
-					installReceiverEtc2.onReceive(context, intent);
-
-				} catch (Exception e) {
-
-				}
-			}
-		}
-	}
-
-}
-
-```
 
 ------------------
 
