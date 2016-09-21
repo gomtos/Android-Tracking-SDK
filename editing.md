@@ -46,6 +46,75 @@ Android Native APP
 | Setting & Code | AndroidManifest.xml – Install referral 추가 (optional) | install 수 측정 | |
 | 초기화 Code | Session | 앱 실행 측정 | [“Session” 부분 참고](#session) |
 
+##### Proguard
+Proguard 적용시에는 SDK에 적용되지 않도록 아래 설정을 추가
+```
+-keep class com.fsn.cauly.tracker.** { *; }
+```
+
+##### Initialize
+AndroidManifest.xml 내에 meta data 태그로 발급받은 track code를 입력합니다. 
+예시의 '[CAULY_TRACK_CODE]'부분을 변경합니다. ( [] 기호는 불필요 )
+```xml
+<application
+...
+ <meta-data
+	android:name="cauly_track_code"
+	android:value="[CAULY_TRACK_CODE]" />
+
+...
+</application>
+```
+
+##### Session
+Tracking을 시작하는 시점과 종료하는 시점에 호출. CaulyTrackerBuilder를 통해 tracker instance를 초기화 하는 단계에서 ‘start’를 호출하는 것이 권장됩니다.
+
+###### sample
+startSession
+```java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	setContentView(R.layout.activity_main);
+
+	CaulyTrackerBuilder caulyTrackerBuilder = new CaulyTrackerBuilder(getApplicationContext());
+
+	CaulyTracker caulyTracker = caulyTrackerBuilder.setUserId("customer_id_0922451")
+			.setAge("25")
+			.setGender(TrackerConst.FEMALE)
+			.setLogLevel(LogLevel.Debug)
+			.build();
+	caulyTracker.startSession();
+}
+```
+또는  Android Activity LifeCycle 중 Activity가 Active 상태가 될때 Callback을 받는 overrided method중에 한 곳에 작성합니다.
+
+```java
+@Override
+protected void onResume() {
+	super.onResume();
+	try {
+		CaulyTrackerBuilder.getTrackerInstance().startSession();
+	} catch (CaulyException e) {
+		e.printStackTrace();
+	}
+}
+```
+
+close
+```java
+@Override
+protected void onDestroy() {
+	super.onDestroy();
+	try {
+		CaulyTrackerBuilder.getTrackerInstance().closeSession();
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+}
+```
+
+
 #### DeepLink 처리 (해당시에만)
 광고주의 APP이 Deep Link를 지원하여 유저가 광고를 클릭 했을 때 랜딩하는 위치가 APP의 메인 페이지가 아닌 다른 특정 페이지 (또는 상품상세페이지)인 경우에만 해당되는 사항입니다. 해당사항이 없을 경우 3. Event 처리 단계로 넘어갑니다.
 ```java
@@ -74,27 +143,6 @@ caulyTracker.traceDeepLink(deepLinkStr);
 | OPEN | - 리타겟팅 광고 노출 대상자 선정 | (OPEN 이벤트) |
 | CA_CONVERSION | - 전환 건수 측정 <br>- 예) 상담신청완료 등 | (Conversion 이벤트) |
 
-
-##### Project Setting
-###### Proguard
-Proguard 적용시에는 SDK에 적용되지 않도록 아래 설정을 추가
-```
--keep class com.fsn.cauly.tracker.** { *; }
-```
-
-###### Initialize
-AndroidManifest.xml 내에 meta data 태그로 발급받은 track code를 입력합니다. 
-예시의 '[CAULY_TRACK_CODE]'부분을 변경합니다. ( [] 기호는 불필요 )
-```xml
-<application
-...
- <meta-data
-	android:name="cauly_track_code"
-	android:value="[CAULY_TRACK_CODE]" />
-
-...
-</application>
-```
 
 ##### SDK 구조
 ###### CaulyTrackerBuilder
@@ -250,54 +298,6 @@ public class OtherInstallReceiver extends BroadcastReceiver {
 ```
 
 ------------------
-
-##### Session
-Tracking을 시작하는 시점과 종료하는 시점에 호출. CaulyTrackerBuilder를 통해 tracker instance를 초기화 하는 단계에서 ‘start’를 호출하는 것이 권장됩니다.
-
-###### sample
-startSession
-```java
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-	super.onCreate(savedInstanceState);
-	setContentView(R.layout.activity_main);
-
-	CaulyTrackerBuilder caulyTrackerBuilder = new CaulyTrackerBuilder(getApplicationContext());
-
-	CaulyTracker caulyTracker = caulyTrackerBuilder.setUserId("customer_id_0922451")
-			.setAge("25")
-			.setGender(TrackerConst.FEMALE)
-			.setLogLevel(LogLevel.Debug)
-			.build();
-	caulyTracker.startSession();
-}
-```
-또는  Android Activity LifeCycle 중 Activity가 Active 상태가 될때 Callback을 받는 overrided method중에 한 곳에 작성합니다.
-
-```java
-@Override
-protected void onResume() {
-	super.onResume();
-	try {
-		CaulyTrackerBuilder.getTrackerInstance().startSession();
-	} catch (CaulyException e) {
-		e.printStackTrace();
-	}
-}
-```
-
-close
-```java
-@Override
-protected void onDestroy() {
-	super.onDestroy();
-	try {
-		CaulyTrackerBuilder.getTrackerInstance().closeSession();
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
-}
-```
 
 
 ##### Event
