@@ -222,7 +222,7 @@ caulyTracker.traceDeepLink(deepLinkStr);
 | 이벤트명 | 목적 | 연동 가이드 |
 | -------- | ----- | --------- |
 | OPEN | - 리타겟팅 광고 노출 대상자 선정 | [OPEN 이벤트](#open-이벤트) |
-| PRODUCT | - 광고노출 대상자 별 추천 상품목록 생성 <br>- 상품이미지 및 정보를 광고 소재로 활용 | [상품-view-이벤트](#상품-view-이벤트) |
+| PRODUCT | - 광고노출 대상자 별 추천 상품목록 생성 <br>- 상품이미지 및 정보를 광고 소재로 활용 | [상품-VIEW-이벤트](#상품-view-이벤트) |
 | PURCHASE | - 추천상품에서 구매상품 제외 처리 <br>- ROAS 측정 | [PURCHASE 이벤트](purchase-이벤트) |
 | RE-PURCHASE | - 재구매율 측정 (option) | [RE-PURCHASE 이벤트](re-purchase-이벤트) |
 
