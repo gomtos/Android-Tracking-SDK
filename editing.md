@@ -57,8 +57,8 @@ caulyTracker.traceDeepLink(deepLinkStr);
 
 #### Event 처리
 아래 2가지 캠페인 중 집행 예정인 캠페인에 맞게 code 를 삽입합니다.
-- A. Feed 캠페인
-- B. Static 캠페인
+- [A. Feed 캠페인](#a-feed-캠페인)
+- [B. Static 캠페인](#b-static 켐페인)
 
 #### A.	Feed 캠페인
 | 이벤트명 | 목적 | 연동 가이드 |
