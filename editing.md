@@ -15,6 +15,7 @@ Android Native APP
 | 1.0.4 | 2016.06.27 | 권대화(neilkwon@fsn.co.kr) - Android version 2.3 대응 |
 | 1.0.5 | 2016.06.29 | 권대화(neilkwon@fsn.co.kr) - ContentView Bug Fix / Install referrer 로직보완 |
 | 1.0.5 | 2016.07.04 | 권대화(neilkwon@fsn.co.kr) - 정밀성을 위한 추가 정보 전송 |
+| 1.0.6 | 2016.09.22 | 권순국(nezy@fsn.co.kr) - 문서 레이아웃 변경 |
 
 ### 목차
 - [연동 절차](#연동-절차)
@@ -31,7 +32,7 @@ Android Native APP
 1. Cauly 담당자 혹은 fsn_rt@fsn.co.kr로 연락하여 Cauly 리타겟팅 연동에 대해서 협의합니다.
 1. 협의 완료 후, Cauly 담당자를 통해 track_code를 발급받습니다.
 1. track_code 를 포함한 tracker 코드를 아래 ‘연동상세’을 참고하여 해당하는 부분에 해당하는 곳에 삽입합니다.
-1. 코드 삽입 이후 연동이 되었는지 Cauly에게 테스트를 요청합니다.
+1. 코드 삽입 이후 연동이 되었는지 Cauly에게 APK 전달하여 테스트를 요청합니다.
 1. Cauly에서 테스트를 완료하면 APP을 마켓에 업데이트하고 업데이트 내용을 Cauly와 공유합니다.
 1. 마켓 업데이트 완료 후 7일 뒤 (주말 및 공휴일 포함) 광고 라이브 가능합니다. (단, 모수가 너무 적을 경우 모수 수집을 위해 추가 시간이 소요될 수 있습니다.)
 
