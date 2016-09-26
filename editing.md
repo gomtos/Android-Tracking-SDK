@@ -347,7 +347,7 @@ Product product = new Product(productId, productPrice, productQuantity);
 String productId2 = "p_0344412";
 String productPrice2 = "10000";
 String productQuantity2 = "1";
-Product product = new Product(productId2, productPrice2, productQuantity2);
+Product product2 = new Product(productId2, productPrice2, productQuantity2);
 
 // 아래 한 줄을 추가합니다
 purchaseEvent.setPurchaseType("RE-PURCHASE");
