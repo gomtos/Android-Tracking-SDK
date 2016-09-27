@@ -323,7 +323,7 @@ Product product = new Product(productId, productPrice, productQuantity);
 String productId2 = "887654321";
 String productPrice2 = "10000";
 String productQuantity2 = "1";
-Product product = new Product(productId2, productPrice2, productQuantity2);
+Product product2 = new Product(productId2, productPrice2, productQuantity2);
 
 purchaseEvent.setOrderId("order_20160430");
 purchaseEvent.setOrderPrice("70000");
