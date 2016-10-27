@@ -54,6 +54,19 @@ String productId = "987654321"; // 광고주의 product id 를 987654321 라 가
 CaulyTracker caulyTracker = CaulyTrackerBuilder.getTrackerInstance();
 caulyTracker.trackEvent("PRODUCT", productId);
 ```
+##### 검 이벤트
+```java
+String searchWord = "word"; 
+CaulyTracker caulyTracker = CaulyTrackerBuilder.getTrackerInstance();
+caulyTracker.trackEvent("SEARCH", searchWord);
+```
+##### 장구 이벤트
+```java
+String productId = "987654321"; // 광고주의 product id 를 987654321 라 가정하면
+CaulyTracker caulyTracker = CaulyTrackerBuilder.getTrackerInstance();
+caulyTracker.trackEvent("CART", searchWord);
+```
+
 ##### Conversion 이벤트
 ```java
 CaulyTracker caulyTracker = CaulyTrackerBuilder.getTrackerInstance();
